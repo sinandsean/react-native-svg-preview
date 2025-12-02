@@ -2,6 +2,11 @@
 
 All notable changes to "React Native SVG Preview" will be documented in this file.
 
+## [0.1.3] - 2024-12-02
+
+### Added
+- Support for component props with default values (e.g., `({ size = 24, color = "#000" })`)
+
 ## [0.1.2] - 2024-12-02
 
 ### Fixed

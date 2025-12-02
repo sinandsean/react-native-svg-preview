@@ -15542,7 +15542,7 @@ var require_generated = __commonJS({
     exports2.isArrayTypeAnnotation = isArrayTypeAnnotation;
     exports2.isArrowFunctionExpression = isArrowFunctionExpression;
     exports2.isAssignmentExpression = isAssignmentExpression;
-    exports2.isAssignmentPattern = isAssignmentPattern;
+    exports2.isAssignmentPattern = isAssignmentPattern2;
     exports2.isAwaitExpression = isAwaitExpression;
     exports2.isBigIntLiteral = isBigIntLiteral;
     exports2.isBinary = isBinary;
@@ -15550,7 +15550,7 @@ var require_generated = __commonJS({
     exports2.isBindExpression = isBindExpression;
     exports2.isBlock = isBlock;
     exports2.isBlockParent = isBlockParent;
-    exports2.isBlockStatement = isBlockStatement;
+    exports2.isBlockStatement = isBlockStatement2;
     exports2.isBooleanLiteral = isBooleanLiteral;
     exports2.isBooleanLiteralTypeAnnotation = isBooleanLiteralTypeAnnotation;
     exports2.isBooleanTypeAnnotation = isBooleanTypeAnnotation;
@@ -15689,11 +15689,11 @@ var require_generated = __commonJS({
     exports2.isNumberLiteralTypeAnnotation = isNumberLiteralTypeAnnotation;
     exports2.isNumberTypeAnnotation = isNumberTypeAnnotation;
     exports2.isNumericLiteral = isNumericLiteral2;
-    exports2.isObjectExpression = isObjectExpression;
+    exports2.isObjectExpression = isObjectExpression2;
     exports2.isObjectMember = isObjectMember;
     exports2.isObjectMethod = isObjectMethod;
-    exports2.isObjectPattern = isObjectPattern;
-    exports2.isObjectProperty = isObjectProperty;
+    exports2.isObjectPattern = isObjectPattern2;
+    exports2.isObjectProperty = isObjectProperty2;
     exports2.isObjectTypeAnnotation = isObjectTypeAnnotation;
     exports2.isObjectTypeCallProperty = isObjectTypeCallProperty;
     exports2.isObjectTypeIndexer = isObjectTypeIndexer;
@@ -15874,7 +15874,7 @@ var require_generated = __commonJS({
       if (node.type !== "DirectiveLiteral") return false;
       return opts == null || (0, _shallowEqual.default)(node, opts);
     }
-    function isBlockStatement(node, opts) {
+    function isBlockStatement2(node, opts) {
       if (!node) return false;
       if (node.type !== "BlockStatement") return false;
       return opts == null || (0, _shallowEqual.default)(node, opts);
@@ -16009,7 +16009,7 @@ var require_generated = __commonJS({
       if (node.type !== "Program") return false;
       return opts == null || (0, _shallowEqual.default)(node, opts);
     }
-    function isObjectExpression(node, opts) {
+    function isObjectExpression2(node, opts) {
       if (!node) return false;
       if (node.type !== "ObjectExpression") return false;
       return opts == null || (0, _shallowEqual.default)(node, opts);
@@ -16019,7 +16019,7 @@ var require_generated = __commonJS({
       if (node.type !== "ObjectMethod") return false;
       return opts == null || (0, _shallowEqual.default)(node, opts);
     }
-    function isObjectProperty(node, opts) {
+    function isObjectProperty2(node, opts) {
       if (!node) return false;
       if (node.type !== "ObjectProperty") return false;
       return opts == null || (0, _shallowEqual.default)(node, opts);
@@ -16099,7 +16099,7 @@ var require_generated = __commonJS({
       if (node.type !== "WithStatement") return false;
       return opts == null || (0, _shallowEqual.default)(node, opts);
     }
-    function isAssignmentPattern(node, opts) {
+    function isAssignmentPattern2(node, opts) {
       if (!node) return false;
       if (node.type !== "AssignmentPattern") return false;
       return opts == null || (0, _shallowEqual.default)(node, opts);
@@ -16189,7 +16189,7 @@ var require_generated = __commonJS({
       if (node.type !== "ClassMethod") return false;
       return opts == null || (0, _shallowEqual.default)(node, opts);
     }
-    function isObjectPattern(node, opts) {
+    function isObjectPattern2(node, opts) {
       if (!node) return false;
       if (node.type !== "ObjectPattern") return false;
       return opts == null || (0, _shallowEqual.default)(node, opts);
@@ -30418,7 +30418,7 @@ var require_scope = __commonJS({
       isMethod,
       isModuleSpecifier,
       isNullLiteral,
-      isObjectExpression,
+      isObjectExpression: isObjectExpression2,
       isProperty,
       isPureish,
       isRegExpLiteral,
@@ -30437,7 +30437,7 @@ var require_scope = __commonJS({
       variableDeclarator,
       isRecordExpression,
       isTupleExpression,
-      isObjectProperty,
+      isObjectProperty: isObjectProperty2,
       isTopicReference,
       isMetaProperty,
       isPrivateName,
@@ -30993,7 +30993,7 @@ var require_scope = __commonJS({
             if (elem !== null && !this.isPure(elem, constantsOnly)) return false;
           }
           return true;
-        } else if (isObjectExpression(node) || isRecordExpression(node)) {
+        } else if (isObjectExpression2(node) || isRecordExpression(node)) {
           for (const prop of node.properties) {
             if (!this.isPure(prop, constantsOnly)) return false;
           }
@@ -31011,7 +31011,7 @@ var require_scope = __commonJS({
           if (((_node$decorators3 = node.decorators) == null ? void 0 : _node$decorators3.length) > 0) {
             return false;
           }
-          if (isObjectProperty(node) || node.static) {
+          if (isObjectProperty2(node) || node.static) {
             if (node.value !== null && !this.isPure(node.value, constantsOnly)) {
               return false;
             }
@@ -33381,13 +33381,13 @@ var require_whitespace = __commonJS({
       isArrayExpression: isArrayExpression2,
       isAssignmentExpression,
       isBinary,
-      isBlockStatement,
+      isBlockStatement: isBlockStatement2,
       isCallExpression,
       isFunction,
       isIdentifier: isIdentifier2,
       isLiteral,
       isMemberExpression: isMemberExpression2,
-      isObjectExpression,
+      isObjectExpression: isObjectExpression2,
       isOptionalCallExpression,
       isOptionalMemberExpression,
       isStringLiteral: isStringLiteral2
@@ -33432,7 +33432,7 @@ var require_whitespace = __commonJS({
       }
     }
     function isType(node) {
-      return isLiteral(node) || isObjectExpression(node) || isArrayExpression2(node) || isIdentifier2(node) || isMemberExpression2(node);
+      return isLiteral(node) || isObjectExpression2(node) || isArrayExpression2(node) || isIdentifier2(node) || isMemberExpression2(node);
     }
     var nodes = exports2.nodes = {
       AssignmentExpression(node) {
@@ -33484,7 +33484,7 @@ var require_whitespace = __commonJS({
         return 0;
       },
       IfStatement(node) {
-        if (isBlockStatement(node.consequent)) {
+        if (isBlockStatement2(node.consequent)) {
           return 1 | 2;
         }
         return 0;
@@ -33569,7 +33569,7 @@ var require_parentheses = __commonJS({
       isForOfStatement,
       isIndexedAccessType,
       isMemberExpression: isMemberExpression2,
-      isObjectPattern,
+      isObjectPattern: isObjectPattern2,
       isOptionalMemberExpression,
       isYieldExpression,
       isStatement
@@ -33736,7 +33736,7 @@ var require_parentheses = __commonJS({
       return isCallExpression(parent) && parent.callee === node || isMemberExpression2(parent) && parent.object === node;
     }
     function AssignmentExpression(node, parent, tokenContext) {
-      if (needsParenBeforeExpressionBrace(tokenContext) && isObjectPattern(node.left)) {
+      if (needsParenBeforeExpressionBrace(tokenContext) && isObjectPattern2(node.left)) {
         return true;
       } else {
         return ConditionalExpression(node, parent);
@@ -35746,7 +35746,7 @@ var require_types = __commonJS({
     var _t = require_lib4();
     var _jsesc = require_jsesc();
     var {
-      isAssignmentPattern,
+      isAssignmentPattern: isAssignmentPattern2,
       isIdentifier: isIdentifier2
     } = _t;
     var lastRawIdentNode = null;
@@ -35802,7 +35802,7 @@ var require_types = __commonJS({
         this.print(node.key);
         this.tokenChar(93);
       } else {
-        if (isAssignmentPattern(node.value) && isIdentifier2(node.key) && node.key.name === node.value.left.name) {
+        if (isAssignmentPattern2(node.value) && isIdentifier2(node.key) && node.key.name === node.value.left.name) {
           this.print(node.value);
           return;
         }
@@ -40189,7 +40189,7 @@ var require_replacement = __commonJS({
       inheritLeadingComments,
       inheritTrailingComments,
       inheritsComments,
-      isBlockStatement,
+      isBlockStatement: isBlockStatement2,
       isEmptyStatement,
       isExpression,
       isExpressionStatement,
@@ -40382,7 +40382,7 @@ var require_replacement = __commonJS({
           const alternate = node.alternate ? gatherSequenceExpressions([node.alternate], declars) : buildUndefinedNode();
           if (!consequent || !alternate) return;
           exprs.push(conditionalExpression(node.test, consequent, alternate));
-        } else if (isBlockStatement(node)) {
+        } else if (isBlockStatement2(node)) {
           const body = gatherSequenceExpressions(node.body, declars);
           if (!body) return;
           exprs.push(body);
@@ -41488,7 +41488,7 @@ var require_conversion = __commonJS({
       unaryExpression,
       toBindingIdentifierName,
       isFunction,
-      isAssignmentPattern,
+      isAssignmentPattern: isAssignmentPattern2,
       isRestElement,
       getFunctionName,
       cloneNode,
@@ -42055,7 +42055,7 @@ var require_conversion = __commonJS({
       return this.replaceWith(call)[0].get("arguments.0");
     }
     function getFunctionArity(node) {
-      const count = node.params.findIndex((param) => isAssignmentPattern(param) || isRestElement(param));
+      const count = node.params.findIndex((param) => isAssignmentPattern2(param) || isRestElement(param));
       return count === -1 ? node.params.length : count;
     }
   }
@@ -42087,7 +42087,7 @@ var require_introspection = __commonJS({
     var {
       STATEMENT_OR_BLOCK_KEYS,
       VISITOR_KEYS,
-      isBlockStatement,
+      isBlockStatement: isBlockStatement2,
       isExpression,
       isIdentifier: isIdentifier2,
       isLiteral,
@@ -42132,7 +42132,7 @@ var require_introspection = __commonJS({
         return false;
       }
       if (this.isExpression()) {
-        return isBlockStatement(replacement);
+        return isBlockStatement2(replacement);
       } else if (this.isBlockStatement()) {
         return isExpression(replacement);
       }
@@ -42157,7 +42157,7 @@ var require_introspection = __commonJS({
       return true;
     }
     function isStatementOrBlock() {
-      if (this.parentPath.isLabeledStatement() || isBlockStatement(this.container)) {
+      if (this.parentPath.isLabeledStatement() || isBlockStatement2(this.container)) {
         return false;
       } else {
         return STATEMENT_OR_BLOCK_KEYS.includes(this.key);
@@ -43800,6 +43800,40 @@ var RN_PROP_TO_SVG_ATTR = {
   maskUnits: "maskUnits",
   maskContentUnits: "maskContentUnits"
 };
+var propsDefaults = {};
+function extractPropsDefaults(params) {
+  const defaults = {};
+  for (const param of params) {
+    if (t.isObjectPattern(param)) {
+      for (const prop of param.properties) {
+        if (t.isObjectProperty(prop) && t.isAssignmentPattern(prop.value)) {
+          const key = t.isIdentifier(prop.key) ? prop.key.name : null;
+          const defaultValue = prop.value.right;
+          if (key) {
+            if (t.isNumericLiteral(defaultValue)) {
+              defaults[key] = String(defaultValue.value);
+            } else if (t.isStringLiteral(defaultValue)) {
+              defaults[key] = defaultValue.value;
+            }
+          }
+        }
+      }
+    } else if (t.isAssignmentPattern(param) && t.isObjectExpression(param.right)) {
+      for (const prop of param.right.properties) {
+        if (t.isObjectProperty(prop) && t.isIdentifier(prop.key)) {
+          const key = prop.key.name;
+          const value = prop.value;
+          if (t.isNumericLiteral(value)) {
+            defaults[key] = String(value.value);
+          } else if (t.isStringLiteral(value)) {
+            defaults[key] = value.value;
+          }
+        }
+      }
+    }
+  }
+  return defaults;
+}
 function parseReactNativeSvg(code) {
   const errors = [];
   const svgNodes = [];
@@ -43809,25 +43843,56 @@ function parseReactNativeSvg(code) {
       plugins: ["jsx", "typescript", "classProperties", "decorators-legacy"]
     });
     (0, import_traverse.default)(ast, {
-      JSXElement(path) {
-        const element = path.node;
-        const openingElement = element.openingElement;
-        if (t.isJSXIdentifier(openingElement.name)) {
-          const componentName = openingElement.name.name;
-          if (componentName === "Svg" || RN_SVG_TO_SVG[componentName] === "svg") {
-            const svgNode = convertJsxToSvgNode(element);
-            if (svgNode) {
-              svgNodes.push(svgNode);
+      FunctionDeclaration(path) {
+        const defaults = extractPropsDefaults(path.node.params);
+        findSvgInBody(path.node.body, defaults, svgNodes);
+      },
+      ArrowFunctionExpression(path) {
+        const defaults = extractPropsDefaults(path.node.params);
+        if (t.isBlockStatement(path.node.body)) {
+          findSvgInBody(path.node.body, defaults, svgNodes);
+        } else if (t.isJSXElement(path.node.body)) {
+          propsDefaults = defaults;
+          const openingElement = path.node.body.openingElement;
+          if (t.isJSXIdentifier(openingElement.name)) {
+            const componentName = openingElement.name.name;
+            if (componentName === "Svg" || RN_SVG_TO_SVG[componentName] === "svg") {
+              const svgNode = convertJsxToSvgNode(path.node.body);
+              if (svgNode) {
+                svgNodes.push(svgNode);
+              }
             }
-            path.skip();
           }
         }
+      },
+      FunctionExpression(path) {
+        const defaults = extractPropsDefaults(path.node.params);
+        findSvgInBody(path.node.body, defaults, svgNodes);
       }
     });
   } catch (e) {
     errors.push(`Parse error: ${e instanceof Error ? e.message : String(e)}`);
   }
   return { svgNodes, errors };
+}
+function findSvgInBody(body, defaults, svgNodes) {
+  propsDefaults = defaults;
+  (0, import_traverse.default)(body, {
+    JSXElement(path) {
+      const element = path.node;
+      const openingElement = element.openingElement;
+      if (t.isJSXIdentifier(openingElement.name)) {
+        const componentName = openingElement.name.name;
+        if (componentName === "Svg" || RN_SVG_TO_SVG[componentName] === "svg") {
+          const svgNode = convertJsxToSvgNode(element);
+          if (svgNode) {
+            svgNodes.push(svgNode);
+          }
+          path.skip();
+        }
+      }
+    }
+  }, { noScope: true });
 }
 function convertJsxToSvgNode(element) {
   const openingElement = element.openingElement;
@@ -43909,6 +43974,9 @@ function extractAttributeValue(value) {
       }
     }
     if (t.isIdentifier(expr)) {
+      if (propsDefaults[expr.name]) {
+        return propsDefaults[expr.name];
+      }
       return `var(--${expr.name})`;
     }
     if (t.isMemberExpression(expr)) {

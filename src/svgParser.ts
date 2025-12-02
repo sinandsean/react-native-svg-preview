@@ -117,6 +117,50 @@ interface ParseResult {
   errors: string[];
 }
 
+// Store for props default values extracted from function parameters
+let propsDefaults: Record<string, string> = {};
+
+function extractPropsDefaults(params: t.Node[]): Record<string, string> {
+  const defaults: Record<string, string> = {};
+
+  for (const param of params) {
+    // Handle destructured props: function Icon({ size = 24, color = "#000" })
+    if (t.isObjectPattern(param)) {
+      for (const prop of param.properties) {
+        if (t.isObjectProperty(prop) && t.isAssignmentPattern(prop.value)) {
+          const key = t.isIdentifier(prop.key) ? prop.key.name : null;
+          const defaultValue = prop.value.right;
+
+          if (key) {
+            if (t.isNumericLiteral(defaultValue)) {
+              defaults[key] = String(defaultValue.value);
+            } else if (t.isStringLiteral(defaultValue)) {
+              defaults[key] = defaultValue.value;
+            }
+          }
+        }
+      }
+    }
+    // Handle assignment pattern: (props = { size: 24 })
+    else if (t.isAssignmentPattern(param) && t.isObjectExpression(param.right)) {
+      for (const prop of param.right.properties) {
+        if (t.isObjectProperty(prop) && t.isIdentifier(prop.key)) {
+          const key = prop.key.name;
+          const value = prop.value;
+
+          if (t.isNumericLiteral(value)) {
+            defaults[key] = String(value.value);
+          } else if (t.isStringLiteral(value)) {
+            defaults[key] = value.value;
+          }
+        }
+      }
+    }
+  }
+
+  return defaults;
+}
+
 export function parseReactNativeSvg(code: string): ParseResult {
   const errors: string[] = [];
   const svgNodes: SvgNode[] = [];
@@ -127,23 +171,34 @@ export function parseReactNativeSvg(code: string): ParseResult {
       plugins: ['jsx', 'typescript', 'classProperties', 'decorators-legacy'],
     });
 
+    // Find functions containing SVG and extract their props + SVG together
     traverse(ast, {
-      JSXElement(path) {
-        const element = path.node;
-        const openingElement = element.openingElement;
-
-        // Check if this is a top-level SVG element
-        if (t.isJSXIdentifier(openingElement.name)) {
-          const componentName = openingElement.name.name;
-          if (componentName === 'Svg' || RN_SVG_TO_SVG[componentName] === 'svg') {
-            const svgNode = convertJsxToSvgNode(element);
-            if (svgNode) {
-              svgNodes.push(svgNode);
+      FunctionDeclaration(path) {
+        const defaults = extractPropsDefaults(path.node.params);
+        findSvgInBody(path.node.body, defaults, svgNodes);
+      },
+      ArrowFunctionExpression(path) {
+        const defaults = extractPropsDefaults(path.node.params);
+        if (t.isBlockStatement(path.node.body)) {
+          findSvgInBody(path.node.body, defaults, svgNodes);
+        } else if (t.isJSXElement(path.node.body)) {
+          // Arrow function returning JSX directly: () => <Svg>...</Svg>
+          propsDefaults = defaults;
+          const openingElement = path.node.body.openingElement;
+          if (t.isJSXIdentifier(openingElement.name)) {
+            const componentName = openingElement.name.name;
+            if (componentName === 'Svg' || RN_SVG_TO_SVG[componentName] === 'svg') {
+              const svgNode = convertJsxToSvgNode(path.node.body);
+              if (svgNode) {
+                svgNodes.push(svgNode);
+              }
             }
-            // Don't traverse children since we handle them recursively
-            path.skip();
           }
         }
+      },
+      FunctionExpression(path) {
+        const defaults = extractPropsDefaults(path.node.params);
+        findSvgInBody(path.node.body, defaults, svgNodes);
       },
     });
   } catch (e) {
@@ -151,6 +206,28 @@ export function parseReactNativeSvg(code: string): ParseResult {
   }
 
   return { svgNodes, errors };
+}
+
+function findSvgInBody(body: t.BlockStatement, defaults: Record<string, string>, svgNodes: SvgNode[]) {
+  propsDefaults = defaults;
+
+  traverse(body, {
+    JSXElement(path) {
+      const element = path.node;
+      const openingElement = element.openingElement;
+
+      if (t.isJSXIdentifier(openingElement.name)) {
+        const componentName = openingElement.name.name;
+        if (componentName === 'Svg' || RN_SVG_TO_SVG[componentName] === 'svg') {
+          const svgNode = convertJsxToSvgNode(element);
+          if (svgNode) {
+            svgNodes.push(svgNode);
+          }
+          path.skip();
+        }
+      }
+    },
+  }, { noScope: true } as any);
 }
 
 function convertJsxToSvgNode(element: t.JSXElement): SvgNode | null {
@@ -257,6 +334,10 @@ function extractAttributeValue(value: t.JSXAttribute['value']): string | null {
     }
 
     if (t.isIdentifier(expr)) {
+      // Check if we have a default value for this prop
+      if (propsDefaults[expr.name]) {
+        return propsDefaults[expr.name];
+      }
       // Variable reference - return placeholder
       return `var(--${expr.name})`;
     }
