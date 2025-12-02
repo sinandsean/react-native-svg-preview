@@ -1,9 +1,32 @@
 {
-  "name": "react-native-svg-preview",
-  "displayName": "React Native SVG Preview",
-  "description": "Preview React Native SVG components in VS Code",
-  "version": "0.0.1",
-  "publisher": "your-publisher-name",
+  "name": "react-native-svg-preview-panel",
+  "displayName": "React Native SVG Preview Panel",
+  "description": "Preview React Native SVG components directly in VS Code. Supports Circle, Rect, Path, LinearGradient, and more.",
+  "version": "0.1.0",
+  "publisher": "sinandsean",
+  "author": {
+    "name": "sinandsean"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sinandsean/react-native-svg-preview"
+  },
+  "bugs": {
+    "url": "https://github.com/sinandsean/react-native-svg-preview/issues"
+  },
+  "homepage": "https://github.com/sinandsean/react-native-svg-preview#readme",
+  "galleryBanner": {
+    "color": "#1e1e1e",
+    "theme": "dark"
+  },
+  "keywords": [
+    "react-native",
+    "svg",
+    "preview",
+    "react-native-svg",
+    "visualization"
+  ],
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -12,6 +35,7 @@
     "Other"
   ],
   "activationEvents": [
+    "onCommand:rnSvgPreview.showPreview",
     "onLanguage:javascript",
     "onLanguage:javascriptreact",
     "onLanguage:typescript",
