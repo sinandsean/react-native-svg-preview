@@ -2,7 +2,7 @@
   "name": "react-native-svg-preview-panel",
   "displayName": "React Native SVG Preview Panel",
   "description": "Preview React Native SVG components directly in VS Code. Supports Circle, Rect, Path, LinearGradient, and more.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "sinandsean",
   "author": {
     "name": "sinandsean"
