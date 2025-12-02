@@ -2,6 +2,11 @@
 
 All notable changes to "React Native SVG Preview" will be documented in this file.
 
+## [0.1.2] - 2024-12-02
+
+### Fixed
+- Fixed dependencies not bundled in published package (babel parser missing)
+
 ## [0.1.1] - 2024-12-02
 
 ### Fixed

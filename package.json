@@ -2,7 +2,7 @@
   "name": "react-native-svg-preview-panel",
   "displayName": "React Native SVG Preview Panel",
   "description": "Preview React Native SVG components directly in VS Code. Supports Circle, Rect, Path, LinearGradient, and more.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "sinandsean",
   "author": {
     "name": "sinandsean"
@@ -41,7 +41,7 @@
     "onLanguage:typescript",
     "onLanguage:typescriptreact"
   ],
-  "main": "./out/extension.js",
+  "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
@@ -60,9 +60,10 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
+    "vscode:prepublish": "npm run package",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
+    "package": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node",
     "lint": "eslint src --ext ts"
   },
   "devDependencies": {
@@ -71,6 +72,7 @@
     "@types/vscode": "^1.85.0",
     "@typescript-eslint/eslint-plugin": "^6.13.0",
     "@typescript-eslint/parser": "^6.13.0",
+    "esbuild": "^0.27.0",
     "eslint": "^8.54.0",
     "typescript": "^5.3.2"
   },
