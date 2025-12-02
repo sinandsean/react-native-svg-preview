@@ -2,6 +2,11 @@
 
 All notable changes to "React Native SVG Preview" will be documented in this file.
 
+## [0.1.1] - 2024-12-02
+
+### Fixed
+- Fixed extension activation issue (command not found error)
+
 ## [0.1.0] - 2024-12-02
 
 ### Added
